@@ -7,7 +7,7 @@ async function run() {
     const token = core.getInput('token');
     core.info('Setting up DigitalOcean API Token');
 
-    info(`Fetching apps...`);
+    core.info(`Fetching apps...`);
     const data = await fetch({
       url: 'https://api.digitalocean.com/v2/apps',
       method: "GET",
@@ -19,7 +19,7 @@ async function run() {
     const apps = await data.json();
 
 
-    info(`Found ${apps?.services?.length} apps`);
+    core.info(`Found ${apps?.services?.length} apps`);
 
     const tag = core.getInput('tag');
     core.info(`New deploy Tag: ${tag}`);
