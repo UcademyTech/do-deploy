@@ -8,8 +8,7 @@ async function run() {
     core.info('Setting up DigitalOcean API Token');
 
     core.info(`Fetching apps...`);
-    const data = await fetch({
-      url: '//api.digitalocean.com/v2/apps',
+    const data = await fetch('http://api.digitalocean.com/v2/apps', {
       headers: {
         authorization: token
       }
