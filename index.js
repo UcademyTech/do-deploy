@@ -24,7 +24,6 @@ async function run() {
     const modifiedApps = core.getInput('apps').split(',').map(app => app.trim());
     core.info(`Found ${modifiedApps.length} app/s`);
 
-
     core.setOutput('result', 'success');
   } catch (error) {
     core.setFailed(error.message);
