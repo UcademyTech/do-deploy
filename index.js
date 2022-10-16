@@ -1,11 +1,11 @@
-import 'cross-fetch/polyfill';
-import { getInput, info, setOutput, setFailed } from '@actions/core';
+require('cross-fetch/polyfill')
+const core = require('@actions/core');
 
 
 async function run() {
   try {
-    const token = getInput('token');
-    info('Setting up DigitalOcean API Token');
+    const token = core.getInput('token');
+    core.info('Setting up DigitalOcean API Token');
 
     info(`Fetching apps...`);
     const data = await fetch({
@@ -21,15 +21,15 @@ async function run() {
 
     info(`Found ${apps?.services?.length} apps`);
 
-    const tag = getInput('tag');
-    info(`New deploy Tag: ${tag}`);
+    const tag = core.getInput('tag');
+    core.info(`New deploy Tag: ${tag}`);
 
-    const modifiedApps = getInput('apps').split(',').map(app => app.trim());
-    info(`Found ${modifiedApps.length} app/s`);
+    const modifiedApps = core.getInput('apps').split(',').map(app => app.trim());
+    core.info(`Found ${modifiedApps.length} app/s`);
 
-    setOutput('result', 'success');
+    core.setOutput('result', 'success');
   } catch (error) {
-    setFailed(error.message);
+    core.setFailed(error.message);
   }
 }
 
