@@ -1,13 +1,19 @@
-name: 'Wait'
-description: 'Wait a designated number of milliseconds'
+name: 'Ucademy DO Deploy'
+description: 'Action for deploying to DO Ucademy apps.'
 inputs:
-  milliseconds:  # id of input
-    description: 'number of milliseconds to wait'
+  token:
+    description: 'Digital Ocean API token'
     required: true
-    default: '1000'
+  tag:
+    description: 'Tag to deploy'
+    required: true
+  apps:  
+    description: 'Array of modified apps'
+    required: true
+    default: '['api', 'client']'
 outputs:
-  time: # output will be available to future steps
-    description: 'The current time after waiting'
+  result:
+    description: 'Result of the deploy'
 runs:
   using: 'node16'
-  main: 'dist/index.js'
+  main: 'index.js'
