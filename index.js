@@ -34,12 +34,12 @@ async function run() {
 
     core.info(`Fetching apps...`);
     const app = await getApp(token, env);
-    core.info(`Found ${app}`);
+    core.info(`Found ${JSON.stringify(app)}`);
 
     const tag = core.getInput('tag');
     core.info(`New deploy Tag: ${tag}`);
 
-    const modifiedServices = core.getInput('services').split(',').map(app => app.trim());
+    const modifiedServices = core.getInput('services').replace("[", "").replace("]").split(',').map(app => app.trim());
     core.info(`Found ${modifiedServices.length} modified services`);
 
     for (const service of modifiedServices) {
@@ -52,6 +52,7 @@ async function run() {
 
     if (modifiedServices.length > 0) {
       core.info(`Updating app...`);
+      core.info(`New space: ${JSON.stringify(app.spec)}`);
       const update = await updateApp(token, { spec: app.spec });
       core.info(`Update status: ${update.status}`);
       core.info(`Update data: ${JSON.stringify(update.data)}`);
