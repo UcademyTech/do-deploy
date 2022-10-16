@@ -56,6 +56,11 @@ async function run() {
       core.info(`New space: ${JSON.stringify(app.spec)}`);
       const update = await updateApp(token, app.id, { spec: app.spec });
       core.info(`Update status: ${update.status}`);
+
+      if (update.status !== 200) {
+        throw new Error(`Update failed: ${JSON.stringify(update.data)}`);
+      }
+
       core.info(`Update data: ${JSON.stringify(update.data)}`);
     }
 
