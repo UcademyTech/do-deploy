@@ -1,14 +1,18 @@
 name: 'Ucademy DO Deploy'
 description: 'Action for deploying to DO Ucademy apps.'
 inputs:
+  env:
+    description: 'Environment to deploy to'
+    required: true
+    default: 'prod'
   token:
     description: 'Digital Ocean API token'
     required: true
   tag:
     description: 'Tag to deploy'
     required: true
-  apps:  
-    description: 'Array of modified apps'
+  services:  
+    description: 'Array of modified services'
     required: true
 runs:
   using: 'node16'
