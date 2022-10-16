@@ -18,7 +18,6 @@ async function run() {
 
     const apps = await data.json();
 
-
     core.info(`Found ${apps?.services?.length} apps`);
 
     const tag = core.getInput('tag');
