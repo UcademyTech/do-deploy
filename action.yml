@@ -10,9 +10,6 @@ inputs:
   apps:  
     description: 'Array of modified apps'
     required: true
-outputs:
-  result:
-    description: 'Result of the deploy'
 runs:
   using: 'node16'
   main: 'index.js'
