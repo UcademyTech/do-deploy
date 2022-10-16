@@ -39,19 +39,20 @@ async function run() {
     const tag = core.getInput('tag');
     core.info(`New deploy Tag: ${tag}`);
 
-    const modifiedServices = core.getInput('services').replace("[", "").replace("]").split(',').map(app => app.trim());
+    const modifiedServices = core.getInput('services').replace("[", "").replace("]", "").split(',').map(app => app.trim());
     core.info(`Found ${modifiedServices.length} modified services`);
 
     for (const service of modifiedServices) {
       core.info(`Updating ${service}...`);
-      const serviceIndex = app.spec.services.findIndex(s => s.name.includes(service));
+      const serviceIndex = app.spec.services.findIndex(s => s.name.includes(service.replace(/"/g, '')));
       if (serviceIndex > -1) {
-        app.spec.services[serviceIndex].image = tag;
+        app.spec.services[serviceIndex].image = { ...app.spec.services[serviceIndex].image, tag };
+        core.info(`Updated ${service} image to ${tag}`);
       }
     }
 
     if (modifiedServices.length > 0) {
-      core.info(`Updating app...`);
+      core.info(`Updating app `);
       core.info(`New space: ${JSON.stringify(app.spec)}`);
       const update = await updateApp(token, app.id, { spec: app.spec });
       core.info(`Update status: ${update.status}`);
