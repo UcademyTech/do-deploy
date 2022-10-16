@@ -1,18 +1,14 @@
 const core = require('@actions/core');
-const { Octokit } = require("@octokit/action");
-
+const fetch = require('cross-fetch/polyfill')
 
 
 async function run() {
   try {
-
-    const octokit = new Octokit();
-
     const token = core.getInput('token');
     core.info('Setting up DigitalOcean API Token');
 
     core.info(`Fetching apps...`);
-    const { data } = await octokit.request({
+    const { data } = await fetch({
       url: 'https://api.digitalocean.com/v2/apps',
       method: "GET",
       headers: {
