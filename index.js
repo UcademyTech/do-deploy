@@ -52,7 +52,7 @@ async function run() {
 
     if (modifiedServices.length > 0) {
       core.info(`Updating app...`);
-      const update = await updateApp(token, app);
+      const update = await updateApp(token, { spec: app.spec });
       core.info(`Update status: ${update.status}`);
       core.info(`Update data: ${JSON.stringify(update.data)}`);
     }
