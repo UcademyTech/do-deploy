@@ -9,8 +9,7 @@ async function run() {
 
     core.info(`Fetching apps...`);
     const data = await fetch({
-      url: 'https://api.digitalocean.com/v2/apps',
-      method: "GET",
+      url: '//api.digitalocean.com/v2/apps',
       headers: {
         authorization: token
       }
