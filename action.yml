@@ -10,7 +10,6 @@ inputs:
   apps:  
     description: 'Array of modified apps'
     required: true
-    default: '['api', 'client']'
 outputs:
   result:
     description: 'Result of the deploy'
