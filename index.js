@@ -12,8 +12,8 @@ const getApp = async (token, env) => {
   return app
 }
 
-const updateApp = async (token, app) => {
-  const response = await fetch(`http://api.digitalocean.com/v2/apps/${app.id}`, {
+const updateApp = async (token, id, app) => {
+  const response = await fetch(`http://api.digitalocean.com/v2/apps/${id}`, {
     method: 'PUT',
     headers: {
       authorization: `Bearer ${token}`,
@@ -34,7 +34,7 @@ async function run() {
 
     core.info(`Fetching apps...`);
     const app = await getApp(token, env);
-    core.info(`Found ${JSON.stringify(app)}`);
+    core.info(`Found app: ${app.spec.name}`);
 
     const tag = core.getInput('tag');
     core.info(`New deploy Tag: ${tag}`);
@@ -53,7 +53,7 @@ async function run() {
     if (modifiedServices.length > 0) {
       core.info(`Updating app...`);
       core.info(`New space: ${JSON.stringify(app.spec)}`);
-      const update = await updateApp(token, { spec: app.spec });
+      const update = await updateApp(token, app.id, { spec: app.spec });
       core.info(`Update status: ${update.status}`);
       core.info(`Update data: ${JSON.stringify(update.data)}`);
     }
