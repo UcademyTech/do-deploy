@@ -45,18 +45,25 @@ async function run() {
       const s = service.replace(/"/g, '')
       const app = await getAppByService(token, s);
       core.info(`Found app: ${app.spec.name}`);
-      core.info(`Updating ${service} >>> ${env}`);
+
+      core.info(`Updating ${service} >>> ${env}...`);
       const serviceIndex = app.spec.services.findIndex(s => s.name.includes(s));
+
       if (serviceIndex > -1) {
+        
         app.spec.services[serviceIndex].image = { ...app.spec.services[serviceIndex].image, tag };
-        const { status, data } = await updateApp(token, app.id, { spec: { env } });
+        core.info(`Image tag of service ${service} updated to ${tag}`);
+
+        const { status, data } = await updateApp(token, app.id, { spec: app.spec });
+        if (status === 200) core.info(`Updated ${service} >>> ${env}`);
+        
         core.info(`Status: ${status === 200 
           ? `service ${service} updated sucessfuly with tag ${tag} ✅`  
           : `failed updating service ${service} ❌`}`);
         if (status !== 200) throw new Error(`Update failed: ${JSON.stringify(data)}`);
+
       }
     }
-
     core.setOutput('result', 'success');
   } catch (error) {
     core.setFailed(error.message);
