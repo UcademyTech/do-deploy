@@ -42,12 +42,12 @@ async function run() {
     core.info(`Modified services: ${services}`);
 
     for(const service of services) {
-      const s = service.replace(/"/g, '')
-      const app = await getAppByService(token, s);
+      const fs = service.replace(/"/g, '')
+      const app = await getAppByService(token, fs);
       core.info(`Found app: ${app.spec.name}`);
 
       core.info(`Updating ${service} >>> ${env}...`);
-      const serviceIndex = app.spec.services.findIndex(s => s.name.includes(s));
+      const serviceIndex = app.spec.services.findIndex(s => s.name.includes(fs));
 
       if (serviceIndex > -1) {
         
