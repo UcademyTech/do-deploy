@@ -43,6 +43,7 @@ async function run() {
 
     for(const service of services) {
       const app = await getAppByService(token, service);
+      core.info(`Found app: ${app.spec.name}`);
       core.info(`Updating ${service} >>> ${env}`);
       const serviceIndex = app.spec.services.findIndex(s => s.name.includes(service.replace(/"/g, '')));
       if (serviceIndex > -1) {
@@ -54,38 +55,6 @@ async function run() {
         if (update.status !== 200) throw new Error(`Update failed: ${JSON.stringify(update.data)}`);
       }
     }
-
-    // core.info(`Fetching apps...`);
-    // const app = await getAppByService(token, env);
-    // core.info(`Found app: ${app.spec.name}`);
-
-    // const tag = core.getInput('tag');
-    // core.info(`New deploy Tag: ${tag}`);
-
-    // const modifiedServices = parseServices(core.getInput('services'));
-    // core.info(`Found ${modifiedServices.length} modified services`);
-
-    // for (const service of modifiedServices) {
-    //   core.info(`Updating ${service}...`);
-    //   const serviceIndex = app.spec.services.findIndex(s => s.name.includes(service.replace(/"/g, '')));
-    //   if (serviceIndex > -1) {
-    //     app.spec.services[serviceIndex].image = { ...app.spec.services[serviceIndex].image, tag };
-    //     core.info(`Updated ${service} image to ${tag}`);
-    //   }
-    // }
-
-    // if (modifiedServices.length > 0) {
-    //   core.info(`Updating app `);
-    //   core.info(`New spec services: ${JSON.stringify(app.spec.services)}`);
-    //   const update = await updateApp(token, app.id, { spec: app.spec });
-    //   core.info(`Update status: ${update.status}`);
-
-    //   if (update.status !== 200) {
-    //     throw new Error(`Update failed: ${JSON.stringify(update.data)}`);
-    //   }
-
-    //   core.info(`Update data: ${JSON.stringify(update.data)}`);
-    // }
 
     core.setOutput('result', 'success');
   } catch (error) {
