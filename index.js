@@ -55,6 +55,9 @@ async function run() {
         core.info(`Image tag of service ${service} updated to ${tag}`);
 
         const { status, data } = await updateApp(token, app.id, { spec: app.spec });
+
+        core.inf(`Log >>> ${JSON.stringify(data)} `);
+
         if (status === 200) core.info(`Updated ${service} >>> ${env}`);
         
         core.info(`Status: ${status === 200 
