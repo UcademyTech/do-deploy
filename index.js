@@ -56,7 +56,7 @@ async function run() {
 
         const { status, data } = await updateApp(token, app.id, { spec: app.spec });
 
-        core.info(`Log >>> ${JSON.stringify(data)} `);
+        core.info(`Logs >>> ${JSON.stringify(data)}`);
 
         if (status === 200) core.info(`Updated ${service} >>> ${env}`);
         
