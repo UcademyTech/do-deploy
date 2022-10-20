@@ -35,6 +35,9 @@ async function run() {
     const env = core.getInput('env');
     core.info(`Env: ${env}`);
 
+    const tag = core.getInput('tag');
+    core.info(`New deploy Tag: ${tag}`);
+
     const token = core.getInput('token');
     core.info('Setting up DigitalOcean API Token');
 
